@@ -1,44 +1,27 @@
-from abc import ABC, abstractmethod
 
 
-class IAirTrafficControl(ABC):
-    @abstractmethod
-    def send_message(self,sender, message):
-        pass
-
-
-class AirCraft(ABC):
+class AirCraft:
     def __init__(self, tower, name):
         self.tower = tower
         self.name = name
         tower.register_aircraft(self)
 
-    @abstractmethod
     def send_message(self, message):
-        pass
+        self.tower.send_message(self, message)
 
-    @abstractmethod
     def receive_message(self, message):
-        pass
+        print(f"{self.name} received message: {message}")
 
 
 class Airplane(AirCraft):
-    def send_message(self, message):
-        self.tower.send_message(self, message)
-
-    def receive_message(self, message):
-        print(f"{self.name} received message: {message}")
+    pass
 
 
 class Helicopter(AirCraft):
-    def send_message(self, message):
-        self.tower.send_message(self, message)
-
-    def receive_message(self, message):
-        print(f"{self.name} received message: {message}")
+    pass
 
 
-class Tower(IAirTrafficControl):
+class Tower:
     def __init__(self):
         self.aircrafts = []
 
